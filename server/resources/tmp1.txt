@@ -1,0 +1,97 @@
+                                 Desert 1
+                                   ????
+
+--------------------------------------------------------------------------------
+
+Greetings Agent
+
+Simulate ssh session. Find details to get access to another computer.
+
+/ssh/computer1 -> abc-123
+/ssh/abc-123/ls
+/ssh/abc-123/cd/folder1
+/ssh/abc-123/cat/somefile1
+
+Session expires after 10 minuttes.
+
+
+drone1 needs to scan an area to detect activity. Area 15.100,56.392 - 21.103,68.392 
+Batteri time 1 hour. Then it will drop dead
+
+drone1/launch -> Responsetime 5 sec. Response: abc-123 
+drone1/abc-123/info ->
+COORDINATES: 18.234,57.432
+MIC:         45
+drone1/abc-123/target/19.234/57.432
+
+
+
+drone/new -> Get a drone token abc-123
+drone/abc-123/map
+drone/abc-123/n
+drone/abc-123/e
+drone/abc-123/w
+drone/abc-123/s
+drone/abc-123/detonate
+
+...........
+........T..
+XXX....XXXX
+......XX...
+..XXXX.....
+...........
+....^......
+...........
+
+??????
+
+Greetings Agent
+
+Objective:
+  > 
+
+Instructions:
+  - 
+
+References:
+  * <host>/messages
+  * <host>/messages/send/mission5=???
+  * <host>/messages/read/<messageid>
+
+
+
+                                 Mission N
+                             ????????????????
+
+--------------------------------------------------------------------------------
+??????
+/log/datacenter-delta
+
+Find encrypted message
+decrypt on darknet
+Correct message is of format "hh:mm"  and a country
+
+Greetings Agent
+
+Objective:
+  > 
+
+Instructions:
+  - 
+
+References:
+  * <host>/messages
+  * <host>/messages/send/mission4=???
+  * <host>/messages/read/<messageid>
+
+
+
+
+                             /     |     \
+                                   |
+                                    
+                             ----  +  ----
+                                    
+                                   |
+                             \     |     /                       
+

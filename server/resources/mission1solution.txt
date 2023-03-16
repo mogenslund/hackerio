@@ -1,0 +1,43 @@
+                                 Mission 1
+                              -- Solution --
+
+--------------------------------------------------------------------------------
+
+Call the endpoint:
+
+  <host>/contacts/list
+
+Use curl, a browser or some other tool.
+
+Search for Ripper on the list. Notice that his ID is 2206. Call the endpoint
+with the id:
+
+  <host>/contacts/2206
+
+From the record his birthdate is 1966-12-11. Report the date back to HQ by
+calling:
+
+  <host>/messages/send/mission1=1966-12-11
+
+This call will not provide the feedback directly. Instead you get a url for a
+response. Similar to this:
+
+   <host>/messages/read/805f1f80-5e90-4867-af91-760014e8a81b
+
+but probably with another id.
+
+It will take some seconds to process your request. When it is ready the url will
+show the feedback. Until then the response will be:
+
+  "Message in progress"
+
+Call the url regularly, until something like this shows up:
+
+  SUCCESS
+  You have completed mission1
+
+  Next mission:
+
+    <host>/mission2-19adc26d6
+
+Since the solution was correct, a url for the next mission is provided.

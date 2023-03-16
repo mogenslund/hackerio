@@ -1,0 +1,46 @@
+                                 Mission 1
+                    Birth date of Jack Ripper (Test mission)
+
+--------------------------------------------------------------------------------
+
+Greetings Agent
+
+This mission is a test mission, so there is an available solution for you to
+learn the concepts from:
+
+ * <host>/mission1solution
+
+This mission is a test of your skills and abilities as one of our operatives.
+Your success in this mission will determine your readiness for more high-stakes
+assignments.
+
+We have received intelligence that a subject known as "Jack Ripper" is planning
+a terror attack. In order to identify this individual and prevent the attack, we
+need to gather as much information about him as possible.
+
+Our analysis of the available data has led us to believe that Jack Ripper is
+present in our contacts database. Your objective is to use this database to find
+Jack Ripper's date of birth and report it back to headquarters.
+
+For details about the message system take a look at:
+
+  * <host>/messages
+
+Objective:
+  > Find the date of birth of Jack Ripper
+  > Report the date back to HQ
+
+Instructions:
+  - Search the contacts database for the ID of Jack Ripper.
+  - Use the ID to look up Jack Ripper's record in the database.
+  - Locate the date of birth in the record.
+  - Report back to HQ using the message system by calling:
+    <host>/messages/send/mission1=<YYYY-MM-DD>
+
+References:
+  * <host>/mission1solution
+  * <host>/contacts/list
+  * <host>/contacts/<id>
+  * <host>/messages
+  * <host>/messages/send/mission1=<YYYY-MM-DD>
+  * <host>/messages/read/<messageid>

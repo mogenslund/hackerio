@@ -1,0 +1,32 @@
+                          YOU HAVE ENTERED HACKERIO
+
+--------------------------------------------------------------------------------
+
+As a member of HackerIO, an elite team of hackers providing intelligence to the
+government, your skills will be put to the test. Cautious measures have been
+taken to ensure that team members remain anonymous to one another and to the
+government. Your mission will be delivered to you through this site and all
+feedback must be given through this site as well. You will not be informed of
+the purpose of the intelligence you gather. Other teams are responsible for
+carrying out the more delicate tasks.
+
+Your first mission is a training mission, designed to test your capabilities as
+a candidate. Access to more advanced missions will only be granted upon
+successful completion of previous missions. It is crucial that you save the
+unique URLs provided, as failure to do so will result in having to start over.
+
+Your first mission can be found at: <host>/mission1
+
+Be prepared to use specialized tools to access the endpoints, such as
+
+- A browser
+- Postman
+- Curl: curl <host>/mission1
+- Clojure: (slurp "<host>/mission1")
+- Nodejs: fetch('<host>/mission1')
+            .then(r => r.text())
+            .then(t => console.log(t))
+- PowerShell: Invoke-RestMethod -Uri <host>/mission1 
+
+If you are not familiar with any of these tools, you may not be the right
+candidate. Good luck, Agent.
