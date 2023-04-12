@@ -1,0 +1,45 @@
+#+TITLE: Design of HackerIO World
+
+* Dynamics
+** Basic Example
+User has HQ unit and a robotvehicle
+AI has HQ and some turrets
+
+Mission: Destroy AI HQ.
+
+The robotvehicle cannot deal damage, but has heat sensors to detect turrets and other vehicles
+Other units are scattered around the map
+
+If a robotvehicle detects a unit (by looking in its log) its uid can also be found, like "def-456".
+Some units might have some password mechanism.
+
+The unit def-456 can now be taken over and used.
+
+Commands send from HQ to unit are broadcast to any other unit u with (dist u HQ) and (dist u unit) less than (dist HQ unit) (Somehow in between and intercepting). If u has radio the communication will be added to the log.
+
+Units are hard to "see", so capturing broadcasts is essential.
+
+When broadcasting the uid of the unit is encrypted. (With some kind of breakable encryption. Like 100 possibilities or so.)
+
+Depending on level and upgrades positions in broadcasts might be unprecise.
+
+* Units
+** Data
+FIXED:
+- id
+- type
+- max-speed
+- heat-emission
+- range
+- cooldown-time
+- damage
+
+VARIABLE:
+- encryption-key 0-100 (Depending on "level" or upgrades)
+- cooldown-left
+- speed
+- x
+- y
+- target-x
+- target-y
+- log

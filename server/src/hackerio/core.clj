@@ -4,6 +4,7 @@
             ;[ring.middleware.params :refer [wrap-params]]
             ;[ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [hackerio.util :as util]
+            [hackerio.world.app]
             [hackerio.apps.messages]
             [hackerio.apps.darkweb]
             [hackerio.apps.contacts]
@@ -56,6 +57,7 @@
         app (first components)
         hashed (util/my-hash app)
         result (cond (or (= app "") (nil? app)) (resource "index.txt")
+                     (= app "world") (apply hackerio.world.app/api (rest components))
                      (= app "messages") (apply hackerio.apps.messages/api (rest components))
                      (= app "contacts") (apply hackerio.apps.contacts/api (rest components))
                      (= app "darkweb") (apply hackerio.apps.darkweb/api (rest components-unmodified))

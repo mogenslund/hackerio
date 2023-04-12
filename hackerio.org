@@ -1,0 +1,18 @@
+#+TITLE: HackerIO
+
+* Misc
+** Provide information, not act
+Objective is not to *act* on information, but to *provide* information.
+So if I find the enemy HQ to be at [34 45] I succeed and do not have to also attack.
+So how is finding a location rewarded? What are the mechanics?
+
+???
+A game where exposing enemy information will provide "damage".
+In Red Alert we do not consern about maintaining tanks or the personel.
+What is a level further up where we do not consern about the tanks? When do we hit only information?
+
+** Attacking 45,78 with 1000 units
+Initial cost: 100 + 900/4 = 325
+Left: 675
+Loses: 2-3
+If predicted by enemy: 5-1
