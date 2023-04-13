@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sbcl --eval '(ql:quickload :hackerio)' --eval '(hackerio:main)'

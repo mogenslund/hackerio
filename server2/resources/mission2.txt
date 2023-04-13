@@ -1,0 +1,27 @@
+                                 Mission 2
+                            Location of subject
+
+--------------------------------------------------------------------------------
+
+Greetings Agent
+
+You are hereby activated for mission 2: Location of subject.
+
+Intel so far suggests that the person we are looking for is present in the
+contacts database and is known to be born in 1989.
+
+Objective:
+  > Find out where the subject lives
+  > Report back to HQ
+
+Instructions:
+  - Examine the contacts database
+  - Find the record belonging to the subject
+  - From the record extract the location
+  - Report back to HQ using using the send endpoint
+
+References:
+  * <host>/contacts
+  * <host>/messages
+  * <host>/messages/send/mission2=<city>
+  * <host>/messages/read/<messageid>
