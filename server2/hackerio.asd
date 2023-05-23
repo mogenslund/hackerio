@@ -4,11 +4,12 @@
   :license "MIT"
   :homepage "https://github.com/mogenslund/hackerio"
   :version "0.1"
-  :depends-on (:hunchentoot :uuid :cl-csv)
+  :depends-on (:hunchentoot :uuid :cl-csv :cl-ppcre)
   :components ((:module "src"
                 :serial t
                 :components
-                ((:file "main")
+                ((:file "config")
+                 (:file "main")
                  (:file "messages")
                  (:file "contacts")
                  (:file "token-handler"))))
@@ -17,3 +18,7 @@
   #.(uiop:read-file-string
      (uiop:subpathname *load-pathname* "README.md"))
   :in-order-to ((test-op (test-op hackerio-test))))
+
+;; SLIME:
+;; (ql:quickload :hackerio)
+;; (hackerio:main)

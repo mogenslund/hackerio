@@ -1,0 +1,31 @@
+
+                                 Mission 5
+                               Poor password
+
+--------------------------------------------------------------------------------
+
+Hola Agent
+
+We need your help to uncover the last piece of a puzzle. We are close to crack
+the password of one of the employees of Ghost Corp. We are very sure the
+password contains the lastname of person in the contacts database and some
+numbers.
+
+Further more we have a file with encrypted passwords and our investigation
+suggests the needed password is included in the file.
+
+You might need to consult the darkweb to decrypt the passwords.
+
+Objective:
+  > Uncover the password from the passwords file
+  > Report back to HQ
+
+Instructions:
+  - You might need to consult the darkweb
+
+References:
+  * <host>/file1459382
+  * <host>/darkweb
+  * <host>/messages
+  * <host>/messages/send/mission5=<password>
+  * <host>/messages/read/<messageid>

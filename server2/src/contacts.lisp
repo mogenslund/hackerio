@@ -8,19 +8,19 @@
     (let ((csv-contents (cl-csv:read-csv stream)))
       csv-contents)))
 
-(defvar *contacts* (rest (read-csv-to-list "/Users/mogensbrodsgaardlund/proj/hackerio/server2/resources/contacts.csv")))
+(defvar *contacts* (rest (read-csv-to-list (concatenate 'string *projectpath* "/resources/contacts.csv"))))
 
-(defun contact (id)
+(defun contacts (&key id)
   (let* ((hit (find-if (lambda (entry) (string= (first entry) (format nil "~A" id))) *contacts*)))
     (if hit
-      (format nil "ID: ~A~%FIRSTNAME: ~A~%LASTNAME: ~A~%BIRTHDATE: ~A~%CITY: ~A~%"
+      (format nil "~%ID: ~A~%FIRSTNAME: ~A~%LASTNAME: ~A~%BIRTHDATE: ~A~%CITY: ~A~%"
               (nth 0 hit) (nth 1 hit) (nth 2 hit) (nth 3 hit) (nth 4 hit))
-      "No hits")))
+      (format nil "No hits for id: ~A" id))))
 
-(defun contact-list ()
+(defun contacts-list ()
   (reduce (lambda (all entry) (format nil "~A~A ~A ~A~%" all (nth 0 entry) (nth 1 entry) (nth 2 entry))) *contacts* :initial-value ""))
 
-; (contact "2046")
-; (contact 2046)
-; (contact "8046")
+; (contact :id "2046")
+; (contact :id 2046)
+; (contact :id "8046")
 ; (contact-list)

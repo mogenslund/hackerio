@@ -1,3 +1,4 @@
+
                                  Mission 1
                     Birth date of Jack Ripper (Test mission)
 
@@ -39,8 +40,12 @@ Instructions:
 
 References:
   * <host>/mission1solution
+  * <host>/contacts
   * <host>/contacts/list
+  * <host>/contacts?id=2068
   * <host>/contacts/<id>
   * <host>/messages
   * <host>/messages/send/mission1=<YYYY-MM-DD>
+  * curl 'http://localhost:4242/msg?to=acme' -d '1982-13-02'
   * <host>/messages/read/<messageid>
+  * curl '<host>/test1?a=1' -H 'token: abc-123' -d 'My message'

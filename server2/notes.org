@@ -18,3 +18,39 @@ EMACS:
 (setq inferior-lisp-program "sbcl")
 
 M-x slime
+
+* Format
+<host>/contacts?token=abc-123&id=45
+<host>/contacts-list?token=abc-123
+
+All GET. First validate url against token (contains hashes (hash "contacts-abc-123"))
+
+Named functions (contacts :id 45)
+
+All output is txt
+
+* Scratch
+(ql:quickload :hackerio)
+(hackerio:main)
+(hunchentoot:stop *server*)
+(hackerio:contact-list)
+
+* World
+Database
+Get access to devices and features by hacking (No money => No need to create multiple users)
+Access keys are the loots
+Compete and win trophies and access keys
+Access keys are personal (Hashed key+token)
+A user is a hash
+
+(ql:quickload :sha1)
+(sha1:sha1-hex "abc-123")
+
+** User
+Username: myname
+Token: hashed
+Accesses: [hashes of (concat access-token token)] ; To avoid sharing
+
+** Accesses:
+Contacts: http://localhost:4444/contacts?token=abc-123&key=def-456&id=1111
+

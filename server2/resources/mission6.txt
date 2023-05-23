@@ -1,0 +1,32 @@
+
+                                 Mission 6
+                               Nuclear attack
+
+--------------------------------------------------------------------------------
+
+Greetings Agent
+
+This is urgent!
+
+We have got intel from a reliable source that a coordinated nuclear attack is
+about to initiated. It is planned to happen tomorrow at 20:30 and it is expected
+to hit 3 cities. We need to know the location of the launch site to prevent the
+attacks.
+
+All we have is a logfile from this server controlling the launch:
+
+ * <host>/file3423121
+
+Objective:
+  > Find the city where the nuclear attack server is located
+
+Instructions:
+  - Use the log file and any available source to locate the launch site
+
+References:
+  * <host>/file3423121
+  * <host>/darkweb
+  * <host>/contacts
+  * <host>/messages
+  * <host>/messages/send/mission6=<city>
+  * <host>/messages/read/<messageid>
