@@ -1,18 +1,3 @@
-;; SLIME:
-;; (ql:quickload :hackerio)
-;; (hackerio:start-server)
-;;
-;; sbcl
-;; (load "main.lisp")
-;;
-;; (sb-posix:chdir (format nil "~Aproj/hackerio/server2" (user-homedir-pathname)))
-;; (load (format nil "~A/main.lisp" (sb-posix:getcwd)))
-
-;; (load (merge-pathnames "quicklisp/setup.lisp" (user-homedir-pathname)))
-;;
-
-
-
 (in-package :hackerio)
 
 (defun mogens-test ()
@@ -47,20 +32,15 @@
     (setf (hunchentoot:content-type*) "text/plain")
     (format nil "Test working~@[ ~A~]!" param))
 
-; http://localhost:4242/test0?token=abc-123&param=abc
+  ; http://localhost:4242/test0?token=abc-123&param=abc
 
-  (hunchentoot:define-easy-handler (msg-handler :uri "/msg") (to uid)
+  (hunchentoot:define-easy-handler (msg-handler :uri "/msg") (to uid content)
     (setf (hunchentoot:content-type*) "text/plain")
-    (cond ((eq (hunchentoot:request-method *request*) :post)
-             (let* ((post-body (raw-post-data :force-text t)))
-               (setf (hunchentoot:content-type*) "text/plain")
-               (send-message to post-body)))
-          ((eq (hunchentoot:request-method *request*) :get)
-               (setf (hunchentoot:content-type*) "text/plain")
-               (get-response uid))))
-; !!!!!!!!!!!!!! NO POST !!!!!!!!!! (defparameter *t1* (dex:post "http://localhost:4242/msg?to=test" :headers `(("Content-Type" . "text/plain") ("token" . "abc-123")) :content "My message"))
-; (dex:get (format nil "http://localhost:4242/msg?uid=~A" *t1*) :headers `(("Content-Type" . "text/plain") ("token" . "abc-123")) :content "My message")
+    (cond (uid (get-response uid))
+          (t (send-message to content))))
 
+  ; (setq *t1* (dex:get "http://localhost:4242/msg?token=abc-123&to=test&content=abcdef123"))
+  ; (dex:get (format nil "http://localhost:4242/msg?token=abc-123&uid=~A" *t1*))
 
   (hunchentoot:define-easy-handler (mission-handler :uri "/mission") (token id)
     (setf (hunchentoot:content-type*) "text/plain")
@@ -103,48 +83,9 @@
                 (hunchentoot:server-protocol *request*)
                 (hunchentoot:host *request*)
                 (hunchentoot:raw-post-data :force-text t)))
-;(dex:post "http://localhost:4242/test1?a=1" :headers `(("content-type" . "text/plain") ("token" . "abc-123")) :content "My message")
-;(cl-ppcre:all-matches-as-strings "" "aaaaaaabc3.4d5.6")
-;(string= (subseq "HTTPSasdf" 0 5) "HTTPS")
+
   (hunchentoot:start *server*))
 
 (defun stop-server ()
   (write-line "Stopping server")
   (hunchentoot:stop *server*))
-
-; (stop-server)
-
-;(ql:quickload '("hunchentoot"))
-
-;(defun hello ()
-;   (format nil "Hello, it works!"))
-;
-;(push
-;  (hunchentoot:create-prefix-dispatcher "/hello" #'hello)
-;  hunchentoot:*dispatch-table*)
-;
-;(defvar *server* (make-instance 'hunchentoot:easy-acceptor :port 4242))
-;(hunchentoot:start *server*)
-;
-;(hunchentoot:define-easy-handler (say-yo :uri "/yo") (name)
-;  (setf (hunchentoot:content-type*) "text/plain")
-;  (format nil "Hey~@[ ~A~]!" name))
-;
-;(hunchentoot:define-easy-handler (mission1 :uri "/mission1") ()
-;  (setf (hunchentoot:content-type*) "text/plain")
-;  (format nil "~A" (uiop:read-file-string (format nil "~A/mission1.txt" (sb-posix:getcwd)))))
-;
-;(hunchentoot:define-easy-handler (test1 :uri "/test1") ()
-;  (setf (hunchentoot:content-type*) "text/plain")
-;  (format nil "~A/mission1" (sb-posix:getcwd)))
-
-; (ql:quickload "dexador")
-; (dex:get "http://localhost:4242/yo?name=Alice")
-; (dex:get "http://localhost:4242/mission1")
-; (dex:post "http://localhost:4242/test1" :headers `(("Content-Type" . "text/plain")) :content "My message")
-; (dex:get "http://localhost:4242/test0?param=123")
-; (dex:post "http://localhost:4242/msg?to=test" :headers `(("Content-Type" . "text/plain")) :content "My message")
-; (dex:get "http://localhost:4242/contacts?id=2068")
-; (dex:get "http://localhost:4242/contacts")
-; (hunchentoot:stop *server*)
-

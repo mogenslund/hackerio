@@ -23,6 +23,6 @@
                (remhash uid *post-office*)
                (generate-response (getf response :recipient) (getf response :message)))))))
 
-; (defparameter *t1* (send-message "test" "Msg1"))
+; (setq *t1* (send-message "test" "Msg1"))
 ; (get-response *t1*)
 ; (get-response "nan")
