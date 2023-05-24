@@ -4,7 +4,7 @@
   :license "MIT"
   :homepage "https://github.com/mogenslund/hackerio"
   :version "0.1"
-  :depends-on (:hunchentoot :uuid :cl-csv :cl-ppcre)
+  :depends-on (:hunchentoot :uuid :cl-csv :cl-ppcre :sha1 :dexador)
   :components ((:module "src"
                 :serial t
                 :components

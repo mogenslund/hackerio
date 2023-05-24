@@ -8,15 +8,16 @@
 (defun get-resource (filename)
   (format nil "~A" (uiop:read-file-string (format nil "~A/resources/~A" *projectpath* filename))))
 
-(defun replace-host (request content)
+(defun replace-host (request token content)
   (let* ((protocol (if (string= (subseq (format nil "~A" (hunchentoot:server-protocol request)) 0 5) "HTTPS") "https" "http"))
          (host (format nil "~A://~A" protocol (hunchentoot:host request))))
-    (format nil "~A" (cl-ppcre:regex-replace-all "<host>" content host))))
+    (format nil "~A" (cl-ppcre:regex-replace-all "<token>" (cl-ppcre:regex-replace-all "<host>" content host) (or token "...")))))
 
-; (type-of (cl-ppcre:regex-replace-all "<host>" "abc <host>" "http://localhost:4242"))
+; (type-of (cl-ppcre:regex-replace-all "<host>" "abc <host>" "http://localhost"))
+; (format nil "~A" (cl-ppcre:regex-replace-all "<token>" (cl-ppcre:regex-replace-all "<host>" "<host>asbc<token>" "localhost") (or "abc-123" "...")))
+; (format nil "~A" (cl-ppcre:regex-replace-all "<token>" (cl-ppcre:regex-replace-all "<host>" "<host>asbc<token>" "localhost") (or nil "...")))
 
-(defun access-level1 (token)
-  9)
+(defun access-level1 (token)  9)
 
 ; (access-level1 "abc-123")
 ; (hackerio:access-level1 "abc-123")
@@ -26,51 +27,66 @@
   (declare (ignore args))
   (write-line "Starting server")
 
-  (defvar *server* (make-instance 'hunchentoot:easy-acceptor :port 4242))
+  (defvar *server* (make-instance 'hunchentoot:easy-acceptor :port 80))
 
   (hunchentoot:define-easy-handler (test0-handler :uri "/test0") (param)
     (setf (hunchentoot:content-type*) "text/plain")
     (format nil "Test working~@[ ~A~]!" param))
 
-  ; http://localhost:4242/test0?token=abc-123&param=abc
+  ; http://localhost/test0?token=abc-123&param=abc
 
-  (hunchentoot:define-easy-handler (msg-handler :uri "/msg") (to uid content)
+  (hunchentoot:define-easy-handler (msg-handler :uri "/msg") (to id msg)
     (setf (hunchentoot:content-type*) "text/plain")
-    (cond (uid (get-response uid))
-          (t (send-message to content))))
+    (cond (id (get-response :id id))
+          ((and to msg) (send-message :to to :msg msg))
+          (t (replace-host *request* nil (get-resource "msg.txt")))))
 
-  ; (setq *t1* (dex:get "http://localhost:4242/msg?token=abc-123&to=test&content=abcdef123"))
-  ; (dex:get (format nil "http://localhost:4242/msg?token=abc-123&uid=~A" *t1*))
+  ; (setq *t1* (dex:get "http://localhost/msg?token=abc-123&to=test&content=abcdef123"))
+  ; (dex:get (format nil "http://localhost/msg?token=abc-123&id=~A" *t1*))
+
+  (hunchentoot:define-easy-handler (index-handler :uri "/") (token)
+    (setf (hunchentoot:content-type*) "text/plain")
+    (replace-host *request* token (get-resource "index.txt")))
 
   (hunchentoot:define-easy-handler (mission-handler :uri "/mission") (token id)
     (setf (hunchentoot:content-type*) "text/plain")
     (let* ((level (access-level1 token)))
        (cond ((string= id "tmp") (get-resource "mission1.txt"))
-             ((and (>= level 0) (string= id "mission1")) (replace-host *request* (get-resource "mission1.txt")))
-             ((and (>= level 1) (string= id "mission2")) (replace-host *request* (get-resource "mission2.txt")))
-             ((and (>= level 1) (string= id "mission3")) (replace-host *request* (get-resource "mission3.txt")))
-             ((and (>= level 1) (string= id "mission4")) (replace-host *request* (get-resource "mission4.txt")))
-             ((and (>= level 1) (string= id "mission5")) (replace-host *request* (get-resource "mission5.txt")))
-             ((and (>= level 1) (string= id "mission6")) (replace-host *request* (get-resource "mission6.txt")))
+             ((and (>= level 0) (string= id "1")) (replace-host *request* token (get-resource "mission1.txt")))
+             ((and (>= level 1) (string= id "2")) (replace-host *request* token (get-resource "mission2.txt")))
+             ((and (>= level 1) (string= id "3")) (replace-host *request* token (get-resource "mission3.txt")))
+             ((and (>= level 1) (string= id "4")) (replace-host *request* token (get-resource "mission4.txt")))
+             ((and (>= level 1) (string= id "5")) (replace-host *request* token (get-resource "mission5.txt")))
+             ((and (>= level 1) (string= id "6")) (replace-host *request* token (get-resource "mission6.txt")))
              (t (format nil "Mission ~A does not exist or too low access-level ~A" id level)))))
 
-  ; http://localhost:4242/mission?token=abc-123&id=tmp
-  ; http://localhost:4242/mission?token=abc-123&id=mission1
-  ; http://localhost:4242/mission?token=abc-123&id=mission2
+  ; http://localhost/mission?token=abc-123&id=tmp
+  ; http://localhost/mission?token=abc-123&id=mission1
+  ; http://localhost/mission?token=abc-123&id=mission2
+  ; http://localhost/mission?token=abc-123&id=mission3
+  ; http://localhost/mission?token=abc-123&id=mission4
+  ; http://localhost/mission?token=abc-123&id=mission5
+  ; http://localhost/mission?token=abc-123&id=mission6
+  ; http://localhost/mission?token=abc-123&id=mission7
 
   (hunchentoot:define-easy-handler (contacts-handler :uri "/contacts") (id)
     (setf (hunchentoot:content-type*) "text/plain")
     (contacts :id id))
 
-  ; http://localhost:4242/contacts?token=abc-123&id=2068
-  ; http://localhost:4242/contacts?token=abc-123&id=2046
+  ; http://localhost/contacts?token=abc-123&id=8068
+  ; http://localhost/contacts?token=abc-123&id=2068
+  ; http://localhost/contacts?token=abc-123&id=2046
 
 
   (hunchentoot:define-easy-handler (contacts-list-handler :uri "/contacts-list") ()
     (setf (hunchentoot:content-type*) "text/plain")
     (contacts-list))
 
-  ; http://localhost:4242/contacts-list
+  (hunchentoot:define-easy-handler (mission1solution-handler :uri "/mission1solution") ()
+    (setf (hunchentoot:content-type*) "text/plain")
+    (replace-host *request* nil (get-resource "mission1solution.txt")))
+
+  ; http://localhost/contacts-list
 
   (hunchentoot:define-easy-handler (test1-handler :uri "/test1") (a)
     (setf (hunchentoot:content-type*) "text/plain")
@@ -83,6 +99,8 @@
                 (hunchentoot:server-protocol *request*)
                 (hunchentoot:host *request*)
                 (hunchentoot:raw-post-data :force-text t)))
+
+  ; http://localhost/test1?token=abc-123&a=1000
 
   (hunchentoot:start *server*))
 

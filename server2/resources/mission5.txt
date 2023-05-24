@@ -25,7 +25,6 @@ Instructions:
 
 References:
   * <host>/file1459382
-  * <host>/darkweb
-  * <host>/messages
+  * <host>/msg?token=<token>&to=darkweb=msg=<message>
   * <host>/messages/send/mission5=<password>
   * <host>/messages/read/<messageid>

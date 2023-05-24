@@ -1,0 +1,20 @@
+
+                                  Messages
+
+--------------------------------------------------------------------------------
+
+Send message <msg> to <to> by calling:
+
+  * <host>/msg?to=<to>&msg=<msg>
+
+This call will return an <id> that will be needed to get the reply.
+
+It will take some time to process the message. To check if the message has been
+processed call the reply-url:
+
+  * <host>/msg?id=<id>
+
+If the message is ready, the message will be shown, if not, it will be clear
+from the response.
+
+When a processed reply has been provided, it will be deleted from the server.
