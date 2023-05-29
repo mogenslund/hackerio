@@ -26,7 +26,6 @@ Instructions:
     like "1845") back to HQ.
 
 References:
-  * <host>/tracker/guard
-  * <host>/messages
-  * <host>/messages/send/mission3=<timestamp>
-  * <host>/messages/read/<messageid>
+  * <host>/tracker?id=guard
+  * <host>/msg?to=hq&msg=<timestamp>
+  * <host>/msg?id=<messageid>

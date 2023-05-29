@@ -1,0 +1,8 @@
+
+                                  Tracker
+
+--------------------------------------------------------------------------------
+
+To get live distance to guard:
+
+ * <host>/tracker?id=guard

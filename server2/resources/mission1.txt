@@ -25,7 +25,7 @@ Jack Ripper's date of birth and report it back to headquarters.
 
 For details about the message system take a look at:
 
-  * <host>/messages
+  * <host>/msg
 
 Objective:
   > Find the date of birth of Jack Ripper

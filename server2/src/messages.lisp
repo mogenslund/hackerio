@@ -7,8 +7,11 @@
 
 (defun generate-response (to msg)
   (cond ((string= to "test") (format nil "My response is no to your message:~%~A" msg))
-        ((and (string= to "hq") (string= msg "1966-12-11")) "SUCCESS\nYou have completed Mission 1")
+        ((and (string= to "hq") (string= msg "1966-12-11")) (format nil "SUCCESS~%You have completed Mission 1"))
+        ((and (string= to "hq") (string= (string-downcase msg) "copenhagen")) (format nil "SUCCESS~%You have completed Mission 2"))
+        ((and (string= to "hq") (string= (string-downcase msg) "1230")) (format nil "SUCCESS~%You have completed Mission 3"))
         ((string= to "hq") "Not the answer we are looking for.")
+        ((string= to "bshadow") (decrypt msg))
         (t "Empty response")))
 
 (defun send-message (&key to msg)

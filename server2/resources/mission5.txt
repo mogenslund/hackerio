@@ -14,7 +14,7 @@ numbers.
 Further more we have a file with encrypted passwords and our investigation
 suggests the needed password is included in the file.
 
-You might need to consult the darkweb to decrypt the passwords.
+You might need to consult bshadow to decrypt the passwords.
 
 Objective:
   > Uncover the password from the passwords file
@@ -25,6 +25,7 @@ Instructions:
 
 References:
   * <host>/file1459382
-  * <host>/msg?token=<token>&to=darkweb=msg=<message>
-  * <host>/messages/send/mission5=<password>
-  * <host>/messages/read/<messageid>
+  * <host>/msg?to=bshadow&msg=<message>
+  * <host>/contacts-list
+  * <host>/msg?to=hq&msg=<password>
+  * <host>/msg?id=<messageid>

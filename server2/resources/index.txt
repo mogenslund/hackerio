@@ -18,17 +18,17 @@ unique URLs provided, as failure to do so will result in having to start over.
 
 Your first mission can be found at:
 
-    <host>/mission?token=<token>&id=mission1
+    <host>/mission1
 
 Be prepared to use specialized tools to access the endpoints, such as
 
 - A browser
 - Postman
-- Curl: curl <host>/mission?token=<token>&id=mission1
-- Nodejs: fetch('<host>/mission?token=<token>&id=mission1')
+- Curl: curl <host>/mission1
+- Nodejs: fetch('<host>/mission1')
             .then(r => r.text())
             .then(t => console.log(t))
-- PowerShell: Invoke-RestMethod -Uri <host>/mission?token=<token>&id=mission1
+- PowerShell: Invoke-RestMethod -Uri <host>/mission1
 
 If you are not familiar with any of these tools, you may not be the right
 candidate. Good luck, Agent.

@@ -23,6 +23,6 @@ Instructions:
 
 References:
   * <host>/contacts
-  * <host>/messages
-  * <host>/messages/send/mission2=<city>
-  * <host>/messages/read/<messageid>
+  * <host>/msg
+  * <host>/msg?to=hq&msg=<city>
+  * <host>/msg?id=<messageid>
