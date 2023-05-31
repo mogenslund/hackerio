@@ -13,6 +13,7 @@
                  (:file "messages")
                  (:file "contacts")
                  (:file "tracker")
+                 (:file "cipher")
                  (:file "token-handler"))))
   :description "API Based Hacker Game"
   :long-description

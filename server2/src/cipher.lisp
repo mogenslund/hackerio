@@ -1,5 +1,7 @@
 (in-package :hackerio)
 
+(defvar *alphabet* (coerce "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" 'list))
+
 (defun rotate (c n)
   ;Rotate *alphabet* others should be identity
   (if (position c *alphabet*)
@@ -26,3 +28,4 @@
       '(4 8 102 34 18 83 199 34 10 24 52 32 12 98 23 45 12 34 54 99 87 28 29 93 28 182 32 19 1 23 45))))
 
 ; (decrypt "EjG")
+; (decrypt "oqRBzznP32TcGb")
