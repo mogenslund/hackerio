@@ -20,8 +20,5 @@ Instructions:
 
 References:
   * <host>/sat1
-  * <host>/messages
-  * <host>/messages/send/mission4=dd.ddddd,dd.ddddd
-  * <host>/messages/read/<messageid>
-
-
+  * <host>/msg?to=hq&msg=dd.ddddd,dd.ddddd
+  * <host>/msg?id=<messageid>

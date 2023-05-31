@@ -10,6 +10,7 @@
         ((and (string= to "hq") (string= msg "1966-12-11")) (format nil "SUCCESS~%You have completed Mission 1"))
         ((and (string= to "hq") (string= (string-downcase msg) "copenhagen")) (format nil "SUCCESS~%You have completed Mission 2"))
         ((and (string= to "hq") (string= (string-downcase msg) "1230")) (format nil "SUCCESS~%You have completed Mission 3"))
+        ((and (string= to "hq") (string= (string-downcase msg) "95.85127,85.22671")) (format nil "SUCCESS~%You have completed Mission 4"))
         ((and (string= to "hq") (string= (string-downcase msg) "morales392")) (format nil "SUCCESS~%You have completed Mission 5"))
         ((and (string= to "hq") (string= (string-downcase msg) "minsk")) (format nil "SUCCESS~%You have completed Mission 6"))
         ((string= to "hq") "Not the answer we are looking for.")

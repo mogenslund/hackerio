@@ -4,7 +4,7 @@
   :license "MIT"
   :homepage "https://github.com/mogenslund/hackerio"
   :version "0.1"
-  :depends-on (:hunchentoot :uuid :cl-csv :cl-ppcre :sha1 :dexador)
+  :depends-on (:hunchentoot :uuid :cl-csv :cl-ppcre :sha1 :dexador :alexandria)
   :components ((:module "src"
                 :serial t
                 :components
@@ -13,6 +13,7 @@
                  (:file "messages")
                  (:file "contacts")
                  (:file "tracker")
+                 (:file "sat1")
                  (:file "cipher")
                  (:file "token-handler"))))
   :description "API Based Hacker Game"

@@ -26,6 +26,7 @@
 (defmacro file-handler (handler-name)
   `(hunchentoot:define-easy-handler (,(intern (concatenate 'string (string handler-name) "-handler")) :uri ,(concatenate 'string "/" (string handler-name))) ()
      (setf (hunchentoot:content-type*) "text/plain")
+     ;; !!!!!!!!!!!!!! LOG
      (replace-host *request* nil (get-resource ,(concatenate 'string (string handler-name) ".txt")))))
 
 (defun start-server (&rest args)
@@ -41,6 +42,7 @@
   ; http://localhost/test0?token=abc-123&param=abc
 
   (hunchentoot:define-easy-handler (msg-handler :uri "/msg") (to id msg)
+    ;; !!!!!!!!!!!!!! LOG
     (setf (hunchentoot:content-type*) "text/plain")
     (cond (id (get-response :id id))
           ((and to msg) (send-message :to to :msg msg))
@@ -52,6 +54,13 @@
           (t (replace-host *request* nil (get-resource "tracker.txt")))))
   ; http://localhost/tracker
   ; http://localhost/tracker?id=guard
+
+  (hunchentoot:define-easy-handler (sat1-handler :uri "/sat1/data") ()
+    (setf (hunchentoot:content-type*) "text/plain")
+    (sat1-data))
+  (file-handler "sat1")'
+  ; http://localhost/sat1
+  ; http://localhost/sat1/data
 
   (hunchentoot:define-easy-handler (index-handler :uri "/") (token)
     (setf (hunchentoot:content-type*) "text/plain")
