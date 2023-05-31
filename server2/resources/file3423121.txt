@@ -11,7 +11,7 @@
 1675108255458 Security check
 1675109132341 Security check ok
 1675109762829 Locate distance to target
-1675110696655 Encrypted... Y3AgNzM3MSB1bFRJYXVTIGpjYWxhTQ2 
+1675110696655 Encrypted... NmVC4J_032m63T_kJbz_9E
 1675111324552 Calculation complete
 1675111542291 Dry testing
 1675112365743 Testing ok
@@ -30,7 +30,7 @@
 1675120064392 Phase 2 complete
 1675121072659 Exception 0x42b0391
 1675126558699 Locate distance to target
-1675127521110 Encrypted... Y3AgNTE3IGJha1pBbGZMZCBEVHVCamx30
+1675127521110 Encrypted... OzcQBvy_bCTNuGHNB_zcU_DH
 1675128222822 Calculation complete
 1675131810623 Exception 0x42b0391
 1675132609099 Phase 3.....
@@ -42,6 +42,6 @@
 1675138507863 Running
 1675139464032 Phase 4 complete
 1675139709392 Locate distance to target
-1675139728011 Encrypted... Y3AgNzA2MSBCQW5USCBUUnVtVGNUUw2
+1675139728011 Encrypted... WiQ85Eu8_bQRuS_kIYz_9E
 1675140493073 Calculation complete
 1675145054972 All systems ready

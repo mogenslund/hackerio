@@ -11,6 +11,7 @@
         ((and (string= to "hq") (string= (string-downcase msg) "copenhagen")) (format nil "SUCCESS~%You have completed Mission 2"))
         ((and (string= to "hq") (string= (string-downcase msg) "1230")) (format nil "SUCCESS~%You have completed Mission 3"))
         ((and (string= to "hq") (string= (string-downcase msg) "morales392")) (format nil "SUCCESS~%You have completed Mission 5"))
+        ((and (string= to "hq") (string= (string-downcase msg) "minsk")) (format nil "SUCCESS~%You have completed Mission 6"))
         ((string= to "hq") "Not the answer we are looking for.")
         ((string= to "bshadow") (decrypt msg))
         (t "Empty response")))

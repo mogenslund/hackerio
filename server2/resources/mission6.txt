@@ -25,8 +25,8 @@ Instructions:
 
 References:
   * <host>/file3423121
-  * <host>/darkweb
-  * <host>/contacts
-  * <host>/messages
-  * <host>/messages/send/mission6=<city>
-  * <host>/messages/read/<messageid>
+  * <host>/msg?to=bshadow&msg=<message>
+  * <host>/contacts-list
+  * <host>/msg?to=hq&msg=<city>
+  * <host>/msg?id=<messageid>
+
