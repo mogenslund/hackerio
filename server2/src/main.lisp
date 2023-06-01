@@ -13,6 +13,9 @@
          (host (format nil "~A://~A" protocol (hunchentoot:host request))))
     (format nil "~A" (cl-ppcre:regex-replace-all "<token>" (cl-ppcre:regex-replace-all "<host>" content host) (or token "...")))))
 
+(defun is-admin (admin)
+  (and admin (string= admin "mogens8391")))
+
 ; (type-of (cl-ppcre:regex-replace-all "<host>" "abc <host>" "http://localhost"))
 ; (format nil "~A" (cl-ppcre:regex-replace-all "<token>" (cl-ppcre:regex-replace-all "<host>" "<host>asbc<token>" "localhost") (or "abc-123" "...")))
 ; (format nil "~A" (cl-ppcre:regex-replace-all "<token>" (cl-ppcre:regex-replace-all "<host>" "<host>asbc<token>" "localhost") (or nil "...")))
@@ -24,9 +27,10 @@
 ; (>= (access-level1 "abc-123") 0)
 
 (defmacro file-handler (handler-name)
-  `(hunchentoot:define-easy-handler (,(intern (concatenate 'string (string handler-name) "-handler")) :uri ,(concatenate 'string "/" (string handler-name))) ()
+  `(hunchentoot:define-easy-handler (,(intern (concatenate 'string (string handler-name) "-handler")) :uri ,(concatenate 'string "/" (string handler-name))) (admin)
+     (when (not (is-admin admin))
+       (log1 (format nil "FILE ~A" ,(string handler-name))))
      (setf (hunchentoot:content-type*) "text/plain")
-     ;; !!!!!!!!!!!!!! LOG
      (replace-host *request* nil (get-resource ,(concatenate 'string (string handler-name) ".txt")))))
 
 (defun start-server (&rest args)
@@ -39,10 +43,16 @@
     (setf (hunchentoot:content-type*) "text/plain")
     (format nil "Test working~@[ ~A~]!" param))
 
+  (hunchentoot:define-easy-handler (log-handler :uri "/log") (admin n)
+    (setf (hunchentoot:content-type*) "text/plain")
+    (if (is-admin admin)
+      (get-log (or n 200))
+      "Not allowed"))
+
   ; http://localhost/test0?token=abc-123&param=abc
 
-  (hunchentoot:define-easy-handler (msg-handler :uri "/msg") (to id msg)
-    ;; !!!!!!!!!!!!!! LOG
+  (hunchentoot:define-easy-handler (msg-handler :uri "/msg") (to id msg admin)
+    (when (not (is-admin admin)) (log1 (format nil "MSG ~A ~A ~A" id to msg)))
     (setf (hunchentoot:content-type*) "text/plain")
     (cond (id (get-response :id id))
           ((and to msg) (send-message :to to :msg msg))
@@ -58,7 +68,7 @@
   (hunchentoot:define-easy-handler (sat1-handler :uri "/sat1/data") ()
     (setf (hunchentoot:content-type*) "text/plain")
     (sat1-data))
-  (file-handler "sat1")'
+  (file-handler "sat1")
   ; http://localhost/sat1
   ; http://localhost/sat1/data
 
