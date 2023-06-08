@@ -7,16 +7,16 @@
 (defn generate-response
   [to msg]
   (let [lmsg (str/lower-case msg)]
-    (cond (= to "test") (format "My response is no to your message:\n%s" msg)
-          (and (= to "hq") (= lmsg "1966-12-11")) "SUCCESS\nYou have completed Mission 1"
-          (and (= to "hq") (= lmsg "copenhagen")) "SUCCESS\nYou have completed Mission 2"
-          (and (= to "hq") (= lmsg "1230")) "SUCCESS\nYou have completed Mission 3"
-          (and (= to "hq") (= lmsg "95.85127,85.22671")) "SUCCESS\nYou have completed Mission 4"
-          (and (= to "hq") (= lmsg "morales392")) "SUCCESS\nYou have completed Mission 5"
-          (and (= to "hq") (= lmsg "minsk")) "SUCCESS\nYou have completed Mission 6"
-          (= to "hq") "Not the answer we are looking for."
+    (cond (= to "test") (format "\nMy response is no to your message:\n%s" msg)
+          (and (= to "hq") (= lmsg "1966-12-11")) "\nSUCCESS\nYou have completed Mission 1"
+          (and (= to "hq") (= lmsg "copenhagen")) "\nSUCCESS\nYou have completed Mission 2"
+          (and (= to "hq") (= lmsg "1230")) "\nSUCCESS\nYou have completed Mission 3"
+          (and (= to "hq") (= lmsg "55.69599,12.56716")) "\nSUCCESS\nYou have completed Mission 4"
+          (and (= to "hq") (= lmsg "morales392")) "\nSUCCESS\nYou have completed Mission 5"
+          (and (= to "hq") (= lmsg "minsk")) "\nSUCCESS\nYou have completed Mission 6"
+          (= to "hq") "\nNot the answer we are looking for."
           (= to "bshadow") (cipher/decrypt msg)
-          true "Empty response")))
+          true "\nEmpty response")))
 
 ; (println (generate-response "test" "Some message"))
 

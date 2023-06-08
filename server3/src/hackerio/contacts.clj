@@ -2,7 +2,7 @@
   (:require [clojure.string :as str]
             [hackerio.util :as util]))
 
-(def data (rest (util/read-csv-to-list (util/resource "/contacts.csv"))))
+(def data (rest (util/read-csv-to-list (util/resource "contacts.csv"))))
 
 (defn contact
   [& {:keys [id]}]
@@ -13,7 +13,7 @@
 
 (defn contact-list
   []
-  (str "\n" (str/join "\n" (map #(format "%s %s %s" (nth % 0) (nth % 1) (nth % 2)) data)) "\n"))
+  (str/join "\n" (map #(format "%s %s %s" (nth % 0) (nth % 1) (nth % 2)) data)))
 
 ; (println (contact :id "2046"))
 ; (println (contact :id 2046))

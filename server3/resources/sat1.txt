@@ -11,6 +11,6 @@ different locations.
 
 The latest data can be accessed through this endpoint:
 
- * <host>/sat1/data
+ * <host>/sat1?id=data
 
 The endpoint only returns the latests data and not the whole history. 
