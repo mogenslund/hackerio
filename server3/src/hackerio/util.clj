@@ -18,8 +18,9 @@
   (let [entries (str/split-lines (slurp logfile))]
     (str/join "\n" (drop (- (count entries) n) entries))))
 
-(def resource-path nil)
-; (def resource-path "/Users/mogensbrodsgaardlund/proj/hackerio/server3/resources/")
+(def resource-path 
+  (when (.exists (io/file "/Users/mogensbrodsgaardlund/proj/hackerio/server3/resources/"))
+    "/Users/mogensbrodsgaardlund/proj/hackerio/server3/resources/"))
 
 (defn resource
   [path]
