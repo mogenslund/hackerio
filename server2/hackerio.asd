@@ -14,6 +14,7 @@
                  (:file "contacts")
                  (:file "tracker")
                  (:file "sat1")
+                 (:file "drone")
                  (:file "cipher")
                  (:file "token-handler")
                  (:file "main"))))

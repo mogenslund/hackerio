@@ -1,0 +1,24 @@
+
+                                 Mission 4
+                            Suspicious satellite
+
+--------------------------------------------------------------------------------
+
+Greeting Agent
+
+The satellite Sat 1 measures radiation around the earth. It seems to be
+suspiciously interested in a certain location at the moment.
+
+Find the location and report back to Head Quarters as soon as possible.
+
+Objective:
+  > Find the location of specific interest to Sat 1
+  > Report back to HQ
+
+Instructions:
+  - Analyse the satellite data 
+
+References:
+  * <host>/sat1
+  * <host>/msg?to=hq&msg=dd.ddddd,dd.ddddd
+  * <host>/msg?id=<messageid>

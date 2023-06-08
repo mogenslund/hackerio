@@ -1,0 +1,16 @@
+
+                                  Sat 1
+                            Radiation monitor
+
+--------------------------------------------------------------------------------
+
+This is the interface for the Satellite Sat 1.
+
+The primary task of the satellite is to measure the amount of radiation at
+different locations.
+
+The latest data can be accessed through this endpoint:
+
+ * <host>/sat1/data
+
+The endpoint only returns the latests data and not the whole history. 

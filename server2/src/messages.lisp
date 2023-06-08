@@ -2,9 +2,6 @@
 
 (defvar *post-office* (make-hash-table :test 'equal))
 
-(defun generate-uid ()
-  (uuid:make-v4-uuid))
-
 (defun generate-response (to msg)
   (cond ((string= to "test") (format nil "My response is no to your message:~%~A" msg))
         ((and (string= to "hq") (string= msg "1966-12-11")) (format nil "SUCCESS~%You have completed Mission 1"))

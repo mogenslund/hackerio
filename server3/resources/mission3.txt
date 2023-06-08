@@ -1,0 +1,31 @@
+
+                                 Mission 3
+                                 Off guard 
+
+--------------------------------------------------------------------------------
+
+Greetings Agent
+
+You are hereby activated for mission 3: Off guard.
+
+We have reasons to believe that Ghost Corp is storing sensitive information in
+Warehouse 43. There is a guard patrolling the area around the clock, making it
+difficult for us to gather more information.
+
+However, one of our agents has successfully planted a tracker on the guard's
+vehicle.
+
+Objective:
+  > Find out when the guard is furthest away from the warehouse
+  > Report the time back to HQ
+
+Instructions:
+  - Monitor the data from the tracker to determine at what time of the day the
+    guard is the furthest away from the warehouse.
+  - Use the secure messaging system to send the time of day (in 4-digit format,
+    like "1845") back to HQ.
+
+References:
+  * <host>/tracker?id=guard
+  * <host>/msg?to=hq&msg=<timestamp>
+  * <host>/msg?id=<messageid>
