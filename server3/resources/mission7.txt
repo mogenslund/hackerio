@@ -1,13 +1,39 @@
 
-                              Mission 1-6 DONE
+                                 Mission 7
+                                 Spy drone
 
 --------------------------------------------------------------------------------
 
-You have now completed Mission 1 to Mission 6.
+Greetings Agent
 
-Goto to
+A reliable source, in the city of Moscow, have detected some suspicious radio
+communication. We need to intercept the transmissions.
 
- * <host>/
+To support the operation, hidden in a warehouse nearby are some drones.
 
-Where new series will be published when they are ready.
+Activate a drone by calling
+
+  * <host>/drone?type=moscow
+
+An id will be returned. Use it to control the drone through this syntax:
+
+  * <host>/drone?id=<id>&speed=200&direction=e
+
+If the drone gets to far from the base or runs out of battery, it will be lost.
+
+We expect the drone will be able to pick up the transmissions when close enough
+to this location:
+
+  * Latitude: 55.75275
+  * Longitude: 37.61740
+
+Objective:
+  > Navigate a drone to the specified location and capture the message
+
+References:
+  * <host>/drone
+  * <host>/drone?type=moscow
+  * <host>/drone?id=<id>&speed=200&direction=e
+  * <host>/msg?to=hq&msg=<msg>
+  * <host>/msg?id=<messageid>
 

@@ -15,7 +15,9 @@
 
 (defn move
   [pos direction dist]
-  (let [converted-direction (if (number? direction) direction ({"n" 0 "ne" 45 "e" 90 "se" 135 "s" 180 "sw" 225 "w" 270 "nw" 315} direction))
+  (let [converted-direction (if (re-matches #"-?\d+" direction)
+                              (mod (Integer/parseInt direction) 360)
+                              ({"n" 0 "ne" 45 "e" 90 "se" 135 "s" 180 "sw" 225 "w" 270 "nw" 315} direction))
         radians (Math/toRadians converted-direction)
         dlat (* dist (Math/cos radians) (/ 1 (geometry :lat)))
         dlong (* dist (Math/sin radians) (/ 1 (geometry :long)))]

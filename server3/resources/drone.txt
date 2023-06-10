@@ -1,0 +1,48 @@
+
+                                 Drones
+                             With equipment
+
+--------------------------------------------------------------------------------
+
+This is the interface for drones.
+
+To create a new drone use the url:
+
+  * <host>/drone?type=<type>
+
+For example:
+
+  * <host>/drone?type=moscow
+
+An id will be returned, which is used to get information from the drone and to
+control it. To update and get information use the url:
+
+  * <host>/drone?id=<id>&speed=<speed>&direction=<direction>
+
+For example:
+
+  * <host>/drone?id=<id>&speed=200&direction=nw
+
+or 
+
+  * <host>/drone?id=<id>&speed=200&direction=45
+
+Speed must be a number between 0 and 200, setting the speed in km/h.
+
+Direction is either in degress 0-360 or compass directions:
+
+             n
+
+        nw       ne
+
+      w             e
+
+        sw       se
+
+             s
+
+To only get info, just call:
+
+  * <host>/drone?id=<id>
+
+If the drone gets too far from its base or runs out of battery, it will be lost.

@@ -32,3 +32,12 @@ Be prepared to use specialized tools to access the endpoints, such as
 
 If you are not familiar with any of these tools, you may not be the right
 candidate. Good luck, Agent.
+
+MISSIONS:
+- <host>/mission1 Birth date of Jack Ripper
+- <host>/mission2 Location of subject
+- <host>/mission3 Off guard
+- <host>/mission4 Suspicious satellite
+- <host>/mission5 Poor password
+- <host>/mission6 Nuclear attack
+- <host>/mission7 Spy drone

@@ -15,7 +15,7 @@ attacks.
 
 All we have is a logfile from this server controlling the launch:
 
- * <host>/file3423121
+  * <host>/file3423121
 
 Objective:
   > Find the city where the nuclear attack server is located
