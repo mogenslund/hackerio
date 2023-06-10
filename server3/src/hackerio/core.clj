@@ -6,6 +6,7 @@
             [hackerio.contacts]
             [hackerio.tracker]
             [hackerio.sat1]
+            [hackerio.drone]
             [clojure.string :as str]
             [clojure.java.io :as io]))
 
@@ -25,6 +26,9 @@
         id (get params "id")
         to (get params "to")
         msg (get params "msg")
+        type (get params "type")
+        speed (get params "speed")
+        direction (get params "direction")
         result (cond (= app "test") (str "Admin: " admin "\nApp: " app)
                      (or (= app "") (nil? app)) (slurp (util/resource "index.txt"))
                      (and (= app "log") admin) (util/get-log 200)
@@ -46,6 +50,9 @@
                      (= app "tracker") (slurp (util/resource "tracker.txt"))
                      (and (= app "sat1") (= id "data")) (hackerio.tracker/sat1)
                      (= app "sat1") (slurp (util/resource "sat1.txt"))
+                     (and (= app "drone") (= type "moscow")) (hackerio.drone/drone :type "moscow")
+                     (and (= app "drone") id) (hackerio.drone/drone :id id :speed speed :direction direction)
+                     (= app "drone") (slurp (util/resource "drone.txt"))
                      true (str "\nNothing\n" id "\n" to "\n" msg "\n" request))]
       (when (and (not admin) (re-find #"mission" (str app))) (util/log app))
       {:status 200
