@@ -39,4 +39,4 @@ Call the url regularly, until something like this shows up:
 
   Next mission:
 
-    <host>/mission?id=2
+    <host>/mission2

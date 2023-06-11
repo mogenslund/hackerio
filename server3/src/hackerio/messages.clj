@@ -14,6 +14,7 @@
           (and (= to "hq") (= lmsg "55.69599,12.56716")) "\nSUCCESS\nYou have completed Mission 4"
           (and (= to "hq") (= lmsg "morales392")) "\nSUCCESS\nYou have completed Mission 5"
           (and (= to "hq") (= lmsg "minsk")) "\nSUCCESS\nYou have completed Mission 6"
+          (and (= to "hq") (= lmsg "attack2045")) "\nSUCCESS\nYou have completed Mission 7"
           (= to "hq") "\nNot the answer we are looking for."
           (= to "bshadow") (cipher/decrypt msg)
           true "\nEmpty response")))

@@ -28,7 +28,7 @@
 ; (move {:lat 52.33 :long 21.10} "n" 67)
 ; (move {:lat 52.33 :long 21.10} 90 111)
 
-n(defn dist
+(defn dist
   [pos1 pos2]
   (let [dx (* (- (pos2 :lat) (pos1 :lat)) (geometry :lat))
         dy (* (- (pos2 :long) (pos1 :long)) (geometry :long))]
