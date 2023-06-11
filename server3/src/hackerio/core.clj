@@ -55,7 +55,8 @@
                      (and (= app "drone") id) (hackerio.drone/drone :id id :speed speed :direction direction)
                      (= app "drone") (slurp (util/resource "drone.txt"))
                      true (str "\nNothing\n" id "\n" to "\n" msg "\n" request))]
-      (when (and (not admin) (re-find #"mission|msg" (str app))) (util/log app))
+      (when (and (not admin) (re-find #"mission|msg" (str app)))
+        (util/log (str (request :uri) (when (request :query-string) (str "?" (request :query-string))))))
       {:status 200
        :headers {"Content-Type" "text/plain"}
        :body (str/replace result #"<host>" (str "http://" (request :server-name) (when (not= port 80) (str ":" port))))}))
