@@ -1,0 +1,16 @@
+
+                                  Contacts
+
+--------------------------------------------------------------------------------
+
+To list all contacts use:
+
+    <host>/contacts-list
+
+To display entry with id use:
+
+    <host>/contacts?id=<id>
+
+For example
+
+    <host>/contacts?id=2528  

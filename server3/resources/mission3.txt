@@ -26,6 +26,7 @@ Instructions:
     like "1845") back to HQ.
 
 References:
+  * <host>/tracker
   * <host>/tracker?id=guard
   * <host>/msg?to=hq&msg=<timestamp>
   * <host>/msg?id=<messageid>
