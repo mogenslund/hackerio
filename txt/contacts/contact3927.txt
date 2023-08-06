@@ -1,0 +1,5 @@
+ID: 3927
+FIRSTNAME: Stephanie
+LASTNAME: Williams
+BIRTHDATE: 1931-12-20
+CITY: Niamey

@@ -1,0 +1,5 @@
+ID: 3778
+FIRSTNAME: Danielle
+LASTNAME: Mitchell
+BIRTHDATE: 1951-09-26
+CITY: Skopje

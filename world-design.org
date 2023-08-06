@@ -1,6 +1,60 @@
 #+TITLE: Design of HackerIO World
 
-* Dynamics
+* World
+30000x30000 meters devided into sectors.
+Each sector has a Base somewhere. Getting control over the base should give advantages.
+
+** Sensors
+Sensors, like vision, are activated each time cooldown has been reached.
+Each unit within range is logged with probability of accuracy.
+Better accuracy and range may be optained through upgrades.
+
+* Units
+** Measurements
+- meters
+- seconds
+- %
+
+** Fields
+- id
+- type
+- physical-range (from HQ or Base, maybe exceed range with slower speed???)
+- max-speed (m/s)
+- speed (m/s)
+- health (%)
+- security
+- password (0-security)
+- hack
+  - cooldown (How long before another hack attempt can be made)
+  - last-used
+- pos
+  - x (0-30000 (meters))
+  - y (0-30000 (meters))
+- target
+  -x (unit stops when getting out of range of HQ or Base)
+  -y (unit stops when getting out of range of HQ or Base)
+- sensor
+  - range (m)
+  - accuracy (%)
+  - cooldown (s)
+  - last-used (t)
+- log
+
+** Types
+- hq
+- base
+- scout
+- builder
+- ballistics
+
+** Actions
+- hack
+- sensor (When seing another unit information is logged: id, type, pos, security, health)
+- set-target
+- set-speed
+- get-log
+
+* Dynamics-old
 ** Basic Example
 User has HQ unit and a robotvehicle
 AI has HQ and some turrets
@@ -23,7 +77,7 @@ When broadcasting the uid of the unit is encrypted. (With some kind of breakable
 
 Depending on level and upgrades positions in broadcasts might be unprecise.
 
-* Units
+* Units-old
 ** Data
 FIXED:
 - id

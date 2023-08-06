@@ -1,0 +1,5 @@
+ID: 3593
+FIRSTNAME: Meghan
+LASTNAME: Campbell
+BIRTHDATE: 1979-08-10
+CITY: Tarawa

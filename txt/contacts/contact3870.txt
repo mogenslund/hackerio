@@ -1,0 +1,5 @@
+ID: 3870
+FIRSTNAME: Christine
+LASTNAME: Cook
+BIRTHDATE: 1927-12-20
+CITY: Pristina

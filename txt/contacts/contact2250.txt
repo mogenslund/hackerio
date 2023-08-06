@@ -1,0 +1,5 @@
+ID: 2250
+FIRSTNAME: Jacqueline
+LASTNAME: Torres
+BIRTHDATE: 1952-12-19
+CITY: Reykjavík
