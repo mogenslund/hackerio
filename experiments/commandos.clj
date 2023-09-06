@@ -1,7 +1,19 @@
-(ns user
-  (:require [clojure.string :as str]))
+(ns commandos
+  (:require [clojure.string :as str]
+            [clojure.pprint :as pprint]
+            [ring.adapter.jetty :as jetty]
+            [ring.util.codec :as codec]))
 
 ;; clojure commandos.clj
+;; clojure -M -m commandos
+;; http://localhost/log
+;; http://localhost/map
+;; http://localhost/units
+;; http://localhost/move?par1=s1&par2=s51
+;; http://localhost/scan?par1=s1
+;; (future (doseq [x (range 12)] (slurp "http://localhost/scan?par1=s1") (Thread/sleep 8000)))
+;; http://localhost/debug
+;; http://localhost/quit
 ;; quit
 ;; Iteration1:
 ;; - Exploratory. No constrains. Limitations in my head.
@@ -77,92 +89,231 @@
    \\__________/                \\__________/                \\__________/                \\__________/                \\__________/
 ")
 
+(defn neighbours
+  [loc]
+  (let [[r c] (map #(Integer/parseInt %) (rest (re-find #"S(\d)(\d)" loc)))
+        odd (== (mod c 2) 1)]
+    (into [] (filter identity
+      (if odd
+        (vector
+          (when (> r 1) (str "S" (- r 1) c))
+          (str "S" r (+ c 1))
+          (str "S" (+ r 1) (+ c 1))
+          (when (< r 6) (str "S" (+ r 1) c))
+          (str "S" (+ r 1) (- c 1))
+          (str "S" r (- c 1)))
+        (vector
+          (when (> r 1) (str "S" (- r 1) c))
+          (when (and (> r 1) (< c 8)) (str "S" (- r 1) (+ c 1)))
+          (when (and (< r 7) (< c 8)) (str "S" r (+ c 1)))
+          (when (< r 7) (str "S" (+ r 1) c))
+          (when (and (< r 7) (> c 1)) (str "S" r (- c 1)))
+          (when (and (> r 1) (> c 1)) (str "S" (- r 1) (- c 1)))))))))
+
+(comment
+  (neighbours "S10")
+  (neighbours "S18")
+  (neighbours "S78")
+  (neighbours "S70")
+  (neighbours "S62")
+  (neighbours "S55")
+  (neighbours "S63")
+  (neighbours "S61")
+  (neighbours "S11")
+  (neighbours "S17")
+)
+
+(defn hex-distance
+  [loc1 loc2]
+  (let [[r1 c1] (map #(Integer/parseInt %) (rest (re-find #"S(\d)(\d)" loc1)))
+        [r2 c2] (map #(Integer/parseInt %) (rest (re-find #"S(\d)(\d)" loc2)))
+        offset-to-cube (fn [r c] (let [x c z (- r (quot (- c (mod c 2)) 2)) y (- (- x) z)] [x y z]))
+        [x1 y1 z1] (offset-to-cube r1 c1)
+        [x2 y2 z2] (offset-to-cube r2 c2)]
+    (max (Math/abs (- x2 x1)) (Math/abs (- y2 y1)) (Math/abs (- z2 z1)))))
+
+(comment
+  (hex-distance "S63" "S64")
+  (hex-distance "S62" "S66")
+  (hex-distance "S62" "S62")
+)
+
 ;action:
 ; - move {:location S70 :sec-left 34}
 ;(Only 1 action at a time. Penelty before moving)
 
+(defn pretty-print-str
+  [value]
+  (let [writer (java.io.StringWriter.)]
+    (pprint/write value :stream writer)
+    (.toString writer)))
+
 (def tick0 (quot (System/currentTimeMillis) 1000))
 (defn ticks [] (- (quot (System/currentTimeMillis) 1000) tick0))
 
-(def game (atom {
-  :log ["init"]
-  :player1 {:sc1 {:type "scout"
-                  :loc "S62"
-                  :action {:type :move :loc "S53" :tick 45}
-                  :health 100}}
-  :enemy {:h1 {:type "harvester"
-               :loc "S73"
-               :action nil
-               :health 100}
-          :h2 {:type "harvester"
-               :loc "S78"
-               :action nil
-               :health 100}
-          :h3 {:type "harvester"
-               :loc "S78"
-               :action nil
-               :health 20}}
-  }))
+(def log (atom ["00000000 init"]))
+
+(def units (atom [
+  {:id "spy1" :type "spy" :loc "S62" :action {:type :move :loc "S53" :tick 45}}
+  {:id "marine1" :type "marine" :loc "S65" :action nil}
+  {:id "hacker1" :type "hacker" :loc "S65" :action nil}
+  {:id "sniper1" :type "sniper" :loc "S65" :action nil}
+  {:id "driver1" :type "driver" :loc "S23" :action nil}
+  {:id "tc1" :type "coil" :active true :loc "S34" :hidden false :action nil}
+  {:id "tc2" :type "coil" :active true :loc "S23" :hidden true :action nil}
+  {:id "pc1" :type "server" :loc "S54" :connection "tc2" :hidden false}
+  {:id "guard1" :type "guard" :loc "S65" :route ["S64" "S65" "S55"] :action nil}
+  {:id "guard2" :type "guard" :loc "S66" :route ["S66"] :action nil}
+  {:id "guard3" :type "guard" :loc "S45" :route ["S45" "S46"]:action nil}
+  ]))
+
+(defn update-unit!
+  [id fun]
+  (swap! units #(map (fn [unit] (if (= (unit :id) id) (fun unit) unit)) %)))
+
+(defn unit-field
+  [id field]
+  (get (first (filter #(= (% :id) id) @units)) field))
 
 (defn log-entry
   [s]
-  (swap! game update :log conj s))
+  (swap! log conj (format "%08d %s" (ticks) s)))
 
 (defn show-log
   []
-  (str/join "\n"
-    (@game :log)))
+  (str/join "\n" @log))
+
+(defn scan-request
+  "Id is id of unit to do the scan in its own area"
+  [id]
+  (update-unit! id #(assoc % :action {:type :scan :tick (+ (ticks) 6)})))
+
+(defn scan-action
+  [id]
+  (log-entry (format "DEBUG: scan-action %s" id))
+  (let [loc (unit-field id :loc)
+        owner (unit-field id :owner)
+        sight (unit-field id :sight)]
+    (doseq [u (filter #(and (= (% :loc) loc) (not= (% :owner) owner)) @units)]
+      (when (< (rand-int 10000) (* sight (u :visibility)))
+        (log-entry (format "SCAN %s: %s %s" loc (u :id) (u :type)))))))
+
+(defn move-request
+  "Id is id of unit to do the scan in its own area"
+  [id loc]
+  (update-unit! id #(assoc % :action {:type :move :loc (str/upper-case loc) :tick (+ (ticks) 6)})))
+
+(defn move-action
+  [id loc]
+  (update-unit! id #(assoc % :loc loc))
+  (log-entry (format "MOVE: %s %s" id loc)))
+
+(defn wrap-tokens
+  [tokens size]
+  (loop [left size line [] lines []
+         words tokens]
+    (if-let [word (first words)]
+      (let [wlen (count word)
+            spacing (if (== left size) "" " ")
+            alen (+ (count spacing) wlen)]
+        (if (<= alen left)
+          (recur (- left alen) (conj line spacing word) lines (next words))
+          (recur (- size wlen) [word] (conj lines (apply str line)) (next words))))
+      (when (seq line)
+        (conj lines (apply str line))))))
+
+(comment (wrap-tokens ["snipter1" "guard1" "tc1" "driver1" "baret3" "hacker1" "sniper2"] 12))
+
+(comment
+  (def cells (group-by :loc (filter #(not (:hidden %)) @units)))
+  (cells "S62")
+  (get ["1"] 1)
+)
 
 (defn board
   []
-  (-> board-template
-      (str/replace #"S\d\d-Line1---" "            ")
-      (str/replace #"S\d\d-Line2-----" "              ")
-      (str/replace #"S\d\d-Line3-----" "              ")
-      (str/replace #"S\d\d-Line4---" "            ")
-      (str/replace #"S\d\d-Line5-" "          ")))
+  (let [cells (group-by :loc (filter #(not (:hidden %)) @units))]
+    (-> (reduce (fn [b k]
+                  (let [lines (wrap-tokens (map :id (cells k)) 9)]
+                    (-> b
+                        (str/replace (str k "-Line1---") (format (str "%-12s") (or (get lines 0) "")))
+                        (str/replace (str k "-Line2-----") (format (str "%-14s") (or (get lines 1) "")))
+                        (str/replace (str k "-Line3-----") (format (str "%-14s") (or (get lines 2) "")))
+                        (str/replace (str k "-Line4---") (format (str "%-12s") (or (get lines 3) "")))
+                        (str/replace (str k "-Line5-") (format (str "%-10s") (or (get lines 4) ""))))))
+                board-template (keys cells))
+        (str/replace #"S\d\d-Line1---" "            ")
+        (str/replace #"S\d\d-Line2-----" "              ")
+        (str/replace #"S\d\d-Line3-----" "              ")
+        (str/replace #"S\d\d-Line4---" "            ")
+        (str/replace #"S\d\d-Line5-" "          "))))
+
+(defn execute-actions
+  [units]
+  (doseq [u units]
+    (cond (= (-> u :action :type) :scan) (scan-action (u :id))
+          (= (-> u :action :type) :move) (move-action (u :id) (-> u :action :loc))
+          true (println "Execution " u))))
+
+(defn extract-due-units!
+  []
+  (let [t (ticks)
+        result (atom nil)]  ; Holds the list of due actions
+    (swap! units
+           (fn [us]
+             (let [due-actions (filter (fn [u] (and (:action u) (<= (:tick (:action u)) t))) us)  ; Filter units with due actions
+                   updated-us (map (fn [u] (if (and (:action u) (<= (:tick (:action u)) t))
+                                             (assoc u :action nil) 
+                                             u))
+                                   us)]  
+               (reset! result due-actions)  ; Store due actions in the result atom
+               updated-us)))  ; Return updated units to be stored in units atom
+    @result))  ; Return the due actions
 
 (defn unit-list
-  []
-  (let [g @game
-        ids (-> g :player1 keys)]
-    (str/join "\n"
-      (map #(format "%s %s %s" % (-> g :player1 % :type) (-> g :player1 % :loc)) ids))))
-
-(defn scan
-  [loc]
-  (swap! game assoc-in [:player1 :sc1 :action] {:type :scan :loc loc :tick (+ (ticks) 10)}))
+  [player]
+  (str/join "\n"
+    (map #(format "%s %s %s" (% :id) (% :type) (% :loc))
+         (filter #(= (:owner %) player) @units))))
 
 (defn command
   [s]
-  (let [args (str/split s #" ")
-        cmd (first args)]
-    (cond (= cmd "map") (println (board))
-          (= cmd "units") (println (unit-list))
-          (= cmd "log") (println (show-log))
-          (= cmd "scan") (println (apply scan (rest args)))
-          true (println "OUT:" s))))
+  (when (not= s "log") (log-entry (str "COMMAND: " s)))
+  (try
+    (let [args (str/split s #" ")
+          cmd (first args)]
+      (cond (= cmd "map") (println (board))
+            (= cmd "units") (println (unit-list "p1"))
+            (= cmd "log") (println (show-log))
+            (= cmd "scan") (apply scan-request (rest args))
+            (= cmd "move") (apply move-request (rest args))
+            (= cmd "debug") (do (println (ticks)) (println @units))
+            true (println "OUT:" s)))
+    (catch Exception e (println e))))
 
-(defn execute-actions
-  [g t]
-  ; For each action, if (>= t :tick) execute action and set nil. Otherwise do nothing.
-  g)
-
-(defn remove-dead
-  [g t]
+(defn remove-dead!
+  []
   ; For each health, if (<= :health 0) then dissoc. Otherwise do nothing.
-  g)
-  
-(defn tick
-  [g]
-  (let [t (ticks)]
-    (-> g
-        (execute-actions t)
-        remove-dead)))
+  )
 
+(defn tc-kill
+  []
+  ;; Unique list of active tc fields and neighbours
+  ;; Traverse units. If any on list, print GAME OVER
+  )
+  
 (defn tick!
   []
-  (swap! game tick))
+  (execute-actions (extract-due-units!)) ;; kill-guard
+  ;; tc-kill
+  ;; move-guards
+  ;; guards-kill
+  )
+
+;; PC ACTIONS
+;; ==========
+;; - cmd pc23 ls (list files: guard movements, tc interfaces, encryption keys)
+;; - cmd pc23 cat file (print file) Might be guard movements
 
 (def running (atom false))
 (defn game-loop!
@@ -174,17 +325,41 @@
         (tick!)
         (Thread/sleep (* 1 1000))))))
 
+(defn handler
+  [request]
+  (let [components-unmodified (rest (str/split (request :uri) #"/"))
+        components (map str/lower-case components-unmodified)
+        port (request :server-port)
+        app (first components)
+        params (codec/form-decode (str (request :query-string)))
+        par1 (get params "par1")
+        par2 (get params "par2")
+        result (cond (= app "log") (show-log)
+                     (= app "map") (board)
+                     (= app "units") (unit-list "p1")
+                     (= app "scan") (scan-request par1)
+                     (= app "move") (move-request par1 par2)
+                     (= app "debug") (str (ticks) "\n" (pretty-print-str @units))
+                     true (str "\nNothing\n" request))]
+      {:status 200
+       :headers {"Content-Type" "text/plain"}
+       :body (str/replace result #"<host>" (str "http://" (request :server-name) (when (not= port 80) (str ":" port))))}))
+
+
 
 (defn -main
   [& args]
+  (game-loop!)
   (loop []
     (let [input (read-line)]
       (if (= input "quit")
         (do
           (println "Quitting")
-          (reset! running false))
+          (reset! running false)
+          (shutdown-agents))
         (do
           (command input)
           (recur))))))
 
-(-main)
+(defonce server (jetty/run-jetty handler {:port 80 :join? false}))
+;(-main)
