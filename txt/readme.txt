@@ -7,6 +7,7 @@ Mission solution MD5 hashes:
 
   Mission 1: b3655a22dd7ca6c5710110eb91cf2536
   Mission 2: 74ca39cad0c7a6f4c26d3b8cd0df8d8e
+  Mission 3: 0f48ef057244d72fb0f1c56cc9542ac7
 
 The solution to Mission 1 is your level1 key. So
 

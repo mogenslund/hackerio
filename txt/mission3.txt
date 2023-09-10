@@ -1,0 +1,29 @@
+
+                                 Mission 3 
+                            Submarine Activity
+
+--------------------------------------------------------------------------------
+
+Greetings Agent
+
+We have been tracking a submarine for some time and it would be of highest
+importance, if we can connect it to some activities near Alexeandria.
+
+Parts of the submarines log is located ./files/submarine1.txt 
+
+Coordinates are difficult to understand and the only clue we have got is
+something called "Dive18".
+
+Objective:
+  > Find the date and time when the submarine was located near Alexandria
+
+Instructions:
+  - Analyze and understand the log ./files/submarine1.txt
+  - Use GPS coordinates to figure out when it was near Alaxandria
+  - Check the result:
+      echo -n 'YYYY-MM-DD HH:MM.SS' | md5sum
+    should equal 0f48ef057244d72fb0f1c56cc9542ac7
+
+References:
+  * ./files/submarine1.txt
+
