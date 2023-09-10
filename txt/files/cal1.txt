@@ -1,0 +1,34 @@
+2023-01-01 08:00-09:00 Team Meeting at Office
+2023-02-01 19:00-21:00 Dinner with Sarah at Downtown Bistro
+2023-02-02 10:00-11:00 Yoga Class at Wellness Center
+2023-02-02 15:00-17:00 Book Club at Central Library
+2023-02-03 09:00-10:00 Brunch with Family at Home
+2023-03-02 18:00-20:00 Soccer Practice at Local Field
+2023-03-05 14:00-15:30 Client Meeting at Office
+2023-04-06 08:00-09:00 Doctor’s Appointment at Health Clinic
+2023-05-07 20:00-22:00 Movie Night at Grand Cinema
+2023-05-08 13:00-14:30 Lunch with Mentor at Café Urbano
+2023-05-09 09:00-12:00 Community Volunteering at Community Center
+2023-05-10 19:00-20:30 Concert at City Auditorium
+2023-06-11 08:00-09:00 Team Meeting at Office
+2023-07-12 19:00-21:00 Date Night at Elegant Restaurant
+2023-07-13 09:00-11:00 Workshop at Business Center
+2023-07-14 18:00-19:00 Jogging with Friends at City Park
+2023-07-15 14:00-15:00 Dentist Appointment at Smile Dental Clinic
+2023-07-16 17:00-19:00 Gallery Opening at Art Gallery
+2023-07-17 10:00-12:00 Family Hike at National Park
+2023-07-18 08:00-09:00 Team Meeting at Office
+2023-07-19 20:00-22:00 Comedy Show at Laugh Club
+2023-07-20 14:00-15:30 Project Review at Office
+2023-07-21 18:00-20:00 Carol Singing at Town Square
+2023-07-22 13:00-14:00 Lunch with Colleagues at Taverna
+2023-07-23 09:00-11:00 Farmers Market Visit at Central Market
+2023-07-24 17:00-19:00 Christmas Eve Dinner at Grandma’s House
+2023-07-29 18:30-23:00 Brother Diego’s Birthday
+2023-08-25 12:00-14:00 Christmas Lunch at Home
+2023-08-26 08:00-09:00 Team Meeting at Office
+2023-08-27 19:00-21:00 Game Night at Dave’s Place
+2023-08-28 13:00-14:00 Catch-up Coffee with Alice at Coffee Bean
+2023-08-30 09:00-11:00 Yoga Retreat at Wellness Retreat Center
+2023-12-31 21:00-00:00 New Year’s Eve Party at City Square
+2024-01-01 00:00-01:00 Let the "fireworks" begin

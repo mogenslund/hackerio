@@ -25,8 +25,21 @@ Instructions:
   - Search the contacts database for the ID of Jack Ripper.
   - Use the ID to look up Jack Ripper's record in the database.
   - Locate the date of birth in the record.
-  - Check date: MD5 of YYYY-MM-DD should equal b3655a22dd7ca6c5710110eb91cf2536
+  - Check date:
+      echo -n 'YYYY-MM-DD' | md5sum
+    should equal b3655a22dd7ca6c5710110eb91cf2536
 
 References:
   * ./contacts
+
+---
+
+By the way. He left some kind of encrypted message. Fortunately he was no very
+good at choosing password.
+
+Fe Yalke 9 vkqlU nfk toa dq SZisdZap aj R lWsjooiU!
+
+Having the password you should be able to decrypt it with the command:
+
+  echo 'Fe Yalke 9 vkqlU nfk toa dq SZisdZap aj R lWsjooiU!' | ./bin/decrypt <password> 
 

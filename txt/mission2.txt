@@ -1,7 +1,27 @@
 
                                  Mission 2
-                                    Bla
+                            Suspicious Calendar
 
 --------------------------------------------------------------------------------
 
-This is mission 2
+Greetings Agent
+
+Thank you for helping out with Mission 1!
+
+We have another assignment for you. We have been monitoring calendar data online
+and we have come across something suspicious. Parts of the calendar is saved in
+the file ./files/cal1.txt. We need to know who owns it.
+
+Objective:
+  > Find the full name of the owner of the data in ./files/cal1.txt
+
+Instructions:
+  - Look through the data and see if there are any hints to follow.
+  - Check the result:
+      echo -n 'FIRSTNAME LASTNAME' | md5sum
+    should equal 74ca39cad0c7a6f4c26d3b8cd0df8d8e
+
+References:
+  * ./files/cal1.txt
+  * ./contacts
+
