@@ -1,0 +1,40 @@
+
+                                 Mission 4 
+                            Commando Operation
+
+--------------------------------------------------------------------------------
+
+Greetings Agent
+
+In the ./mission4 there is data for the mission. A central asset is the map.txt.
+
+??? We need a plan for the operation.
+
+Orders look like:
+HH:MM-Unit-Action
+14:40-Sniper-target-ID43
+15:35-Engineer-move-B
+15:40-Engineer-move-C
+16:30-Zapper-move-H
+16:40-Zapper-place-bomb
+16:45-Zapper-move-K
+16:50-Zapper-detonate-bomb
+
+
+At what time should the sniper strike? HH:MM. Which patrol should he aim at: X
+Plan: HH:MM-X
+Sniper orders: X-ID-HH:MM
+Engineer orders: 
+
+From current position A: The sniper can hit targets at
+???
+
+Objective:
+  > 
+
+Instructions:
+  - 
+
+References:
+  * ./mission4
+
