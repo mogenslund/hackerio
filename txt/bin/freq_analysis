@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Perform frequency analysis on the input from stdin
+tr -d -c '[:alpha:]' |         # Keep only alphabetic characters
+tr 'A-Z' 'a-z' |               # Convert to lowercase
+fold -w 1 |                    # Convert string of letters into one letter per line
+sort |                         # Sort letters
+uniq -c |                      # Count occurrences
+sort -nr                       # Sort in descending order of frequency
+
