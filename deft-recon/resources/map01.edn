@@ -1,0 +1,9 @@
+{:agents {"s" {:name "Sniper" :loc "A" :inventory {:sniper-rifle {:bullets 1}}}
+          "e" {:name "Engineer" :loc "I" :inventory {:pistol {:bullets 10}} :description "Engineer and hacker"}}
+ :enemies {:23 {:loc "J" :pattern ["F" 1 :patrol 9 "J" 1 :patrol 9] :description "Enemy soldier on patrol"}
+           :32 {:loc "E" :pattern ["F" 1 :patrol 9 "E" 1 :patrol 9] :description "Enemy soldier on patrol"}}
+ :paths {"A" ["C" "D"] "B" ["D"] "C" ["A" "D"] "D" ["A" "B" "C" "D" "E"] "E" ["D" "G" "F"] "F" ["E" "J" "H"] "G" ["E" "I"] "H" ["F" "J"] "I" ["G" "J"] "J" ["F" "H" "I"]}
+ :entities {:bushes ["A" "B" "F" "I"]
+            :barracs ["G"]
+            :turrets ["E"]
+            :buildings ["H"]}}

@@ -1,0 +1,30 @@
+
+                                Snippets 
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+Frequency analysis
+
+This snippets tries to decrypt with different passwords from the
+passwords1000.txt file. The result is but through frequency analysis resulting
+in an ordering of letters. When the result looks like english the most common
+letters will be first in the analysis, like e s t r a.
+
+    head -n 10 ./files/passwords1000.txt | while read -r line; do
+      echo "$line" $(cat files/sample.txt | bin/decrypt "$line" | bin/freq_analysis)
+    done
+
+This attempts analysis on the first 10 passwords from the passwords file.
+
+One of them has "s e t r o a" as the most significant letters in the decryption.
+It might be worth taking a closer look at.
+
+--------------------------------------------------------------------------------
+Decryption
+
+    cat ./files/sample.txt | bin/decrypt qwerty
+
+The password is "qwerty".
+

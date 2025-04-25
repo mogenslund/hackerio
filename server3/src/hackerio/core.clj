@@ -8,11 +8,39 @@
             [hackerio.sat1]
             [hackerio.drone]
             [clojure.string :as str]
+            [clojure.walk :as walk]
             [clojure.java.io :as io]))
+
+;; All static pages, unless :session parameter, then pickup session from (atom sessions)
+;; Level 1-10, Level 1000 = Admin
+;;
+;; Syntaxes
+;; http://localhost/contacts -> resources/contacts.txt
+;; http://localhost/contact-list -> (contacts/contact-list)
+;; http://localhost/contacts?id=1001 -> (contacts/contact 1001)
+;; http://localhost/mission1 -> file
+;; http://localhost/solution?id=1&result=res -> (solution/solution id res)
+;;
+;; Types:
+;; /<x> : If <x>.txt in resources return
+;; /<x> : If <x>.csv in resources then DB
+;; /<x> : App?
+
 
 (defn is-admin
   [admin]
   (and admin (= admin "mogens8391")))
+
+(defn get-level
+  [k]
+  (cond (= k "abc1") 1
+        (= k "abc2") 2
+        (= k "abc3") 3
+        (= k "abc4") 4
+        (= k "abc5") 5
+        (= k "abc6") 6
+        (= k "abcabc") 1000
+        true 0)) 
      
 (defn handler
   [request]
@@ -23,6 +51,8 @@
         app (first components)
         params (codec/form-decode (str (request :query-string)))
         admin (is-admin (get params "admin"))
+        level (get-level (get params "key"))
+        session (get params "session")
         id (get params "id")
         to (get params "to")
         msg (get params "msg")
@@ -46,7 +76,7 @@
                      (and (= app "msg") id) (hackerio.messages/get-response :id id)
                      (= app "msg") (slurp (util/resource "msg.txt"))
                      (and (= app "contacts") id) (hackerio.contacts/contact :id id)
-                     (= app "contacts") (slurp (util/resource "contacts.txt"))
+                     (and (= app "contacts") (>= level 1)) (slurp (util/resource "contacts.txt"))
                      (= app "contacts-list") (hackerio.contacts/contact-list)
                      (and (= app "tracker") (= id "guard")) (hackerio.tracker/guard)
                      (= app "tracker") (slurp (util/resource "tracker.txt"))
